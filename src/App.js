@@ -1,25 +1,56 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useMemo } from 'react';
+import ControlledPagination from './ControlledPagination';
+import data from './data.json';
+import './style.scss';
 
-function App() {
+// let PageSize = 10;
+
+export default function App() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10); // default page size is 10
+
+  const onUpdateItemsPerPage =  (pageSize) => {
+    setPageSize(pageSize);
+  };
+
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * pageSize;
+    const lastPageIndex = firstPageIndex + pageSize;
+    return data.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <table>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+          </tr>
+        </thead>
+        <tbody>
+          {currentTableData.map(user => {
+            return (
+              <tr>
+                <td>{user.id}</td>
+                <td>{user.first_name + " " + user.last_name}</td>
+                <td>{user.email}</td>
+                <td>{user.phone}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+      <ControlledPagination
+        className="paginationbar"
+        currentPage={currentPage}
+        totalCount={data.length}
+        pageSize={pageSize}
+        onPageChange={page => setCurrentPage(page)}
+        onUpdateItemsPerPage = {pageSize => setPageSize(pageSize)}
+      />
+    </>
   );
 }
-
-export default App;
