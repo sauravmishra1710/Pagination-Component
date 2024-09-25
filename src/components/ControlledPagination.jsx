@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
-import { usePagination, DOTS } from './useControlledPagination';
-import ItemsPerPage from './components/ItemsPerPage';
+import { usePagination, DOTS } from '../useControlledPagination';
+import ItemsPerPage from './ItemsPerPage';
 import './pagination.scss';
 
 const ControlledPagination = props => {

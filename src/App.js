@@ -1,14 +1,20 @@
 import React, { useState, useMemo } from 'react';
-import ControlledPagination from './ControlledPagination';
+import ControlledPagination from './components/ControlledPagination';
+import PaginationType from './components/PaginationType';
 import data from './data.json';
 import './style.scss';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10); // default page size is 10
+  const [paginationType, setPaginationType] = useState("Controlled"); // Controlled pagination by default
 
   const onUpdateItemsPerPage =  (pageSize) => {
     setPageSize(pageSize);
+  };
+
+  const onUpdatePaginationType =  (paginationType) => {
+    setPaginationType(paginationType);
   };
 
   const currentTableData = useMemo(() => {
@@ -19,36 +25,46 @@ export default function App() {
 
   return (
     <>
-      <table>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentTableData.map(user => {
-            return (
-              <tr>
-                <td>{user.id}</td>
-                <td>{user.first_name + " " + user.last_name}</td>
-                <td>{user.email}</td>
-                <td>{user.phone}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <ControlledPagination
-        className="paginationbar"
-        currentPage={currentPage}
-        totalCount={data.length}
-        pageSize={pageSize}
-        onPageChange={page => setCurrentPage(page)}
-        onUpdateItemsPerPage = {onUpdateItemsPerPage}
-      />
+      <div style={{ margin: "10px", justifyContent: "center", display: "grid" }}>
+        <h1>Pagination Component</h1>
+      </div>
+      <div style={{ margin: "10px", justifyContent: "right", display: "grid" }}>
+      <h5 style={{ marginBottom: "5px"}}>Select pagination type</h5>
+        <PaginationType onChangeCallback={onUpdatePaginationType}/>
+      </div>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentTableData.map(user => {
+              return (
+                <tr>
+                  <td>{user.id}</td>
+                  <td>{user.first_name + " " + user.last_name}</td>
+                  <td>{user.email}</td>
+                  <td>{user.phone}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        </div>
+        {(paginationType === "Controlled") ? 
+         <ControlledPagination
+         className="paginationbar"
+         currentPage={currentPage}
+         totalCount={data.length}
+         pageSize={pageSize}
+         onPageChange={page => setCurrentPage(page)}
+         onUpdateItemsPerPage = {onUpdateItemsPerPage}
+       /> : <div>Progressive</div>}
     </>
   );
 }
