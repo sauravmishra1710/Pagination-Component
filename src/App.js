@@ -3,8 +3,6 @@ import ControlledPagination from './ControlledPagination';
 import data from './data.json';
 import './style.scss';
 
-// let PageSize = 10;
-
 export default function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10); // default page size is 10
@@ -17,7 +15,7 @@ export default function App() {
     const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;
     return data.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage]);
+  }, [currentPage, pageSize]);
 
   return (
     <>
@@ -49,7 +47,7 @@ export default function App() {
         totalCount={data.length}
         pageSize={pageSize}
         onPageChange={page => setCurrentPage(page)}
-        onUpdateItemsPerPage = {pageSize => setPageSize(pageSize)}
+        onUpdateItemsPerPage = {onUpdateItemsPerPage}
       />
     </>
   );
