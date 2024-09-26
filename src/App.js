@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import ControlledPagination from './components/ControlledPagination';
+import ProgressivePagination from './components/ProgressivePagination';
 import PaginationType from './components/PaginationType';
 import data from './data.json';
 import './style.scss';
@@ -11,6 +12,7 @@ export default function App() {
 
   const onUpdateItemsPerPage =  (pageSize) => {
     setPageSize(pageSize);
+    setCurrentPage(1);
   };
 
   const onUpdatePaginationType =  (paginationType) => {
@@ -58,13 +60,20 @@ export default function App() {
         </div>
         {(paginationType === "Controlled") ? 
          <ControlledPagination
-         className="paginationbar"
+         className="paginationbarControlled"
          currentPage={currentPage}
-         totalCount={data.length}
+         totalDataCount={data.length}
          pageSize={pageSize}
          onPageChange={page => setCurrentPage(page)}
          onUpdateItemsPerPage = {onUpdateItemsPerPage}
-       /> : <div>Progressive</div>}
+       /> : <ProgressivePagination
+         className="paginationbarProgressive"
+         currentPage={currentPage}
+         totalDataCount={data.length}
+         pageSize={pageSize}
+         onPageChange={page => setCurrentPage(page)}
+         onUpdateItemsPerPage = {onUpdateItemsPerPage}
+          />}
     </>
   );
 }
