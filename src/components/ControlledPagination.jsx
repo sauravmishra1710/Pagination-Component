@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import { usePagination, DOTS } from '../useControlledPagination';
+import { usePagination, DOTS } from '../pagination-hooks/useControlledPagination';
 import ItemsPerPage from './ItemsPerPage';
 import './pagination.scss';
 
@@ -8,7 +8,7 @@ const ControlledPagination = props => {
   const {
     onPageChange,
     onUpdateItemsPerPage,
-    totalCount,
+    totalDataCount,
     siblingCount = 1,
     currentPage,
     pageSize,
@@ -16,9 +16,8 @@ const ControlledPagination = props => {
   } = props;
 
   const paginationRange = usePagination({
-    onUpdateItemsPerPage,
     currentPage,
-    totalCount,
+    totalDataCount,
     siblingCount,
     pageSize
   });
@@ -99,11 +98,9 @@ const ControlledPagination = props => {
         <div className="arrow lastpage" />
         <div className="arrow lastpage" />
       </li>
-      <div>
       <li>
         <ItemsPerPage onChangeCallback={onUpdateItemsPerPage}></ItemsPerPage>
       </li>
-      </div>
     </ul>
   );
 };
