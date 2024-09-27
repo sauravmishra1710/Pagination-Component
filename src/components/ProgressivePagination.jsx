@@ -12,7 +12,6 @@ const ProgressivePagination = props => {
     siblingCount = 1,
     currentPage,
     pageSize,
-    className
   } = props;
 
   const paginationRange = usePagination({
@@ -44,11 +43,11 @@ const ProgressivePagination = props => {
 
   const lastPage = paginationRange[paginationRange.length - 1];
   return (
-    <div>
-        <div>Page {currentPage} of {lastPage}</div>
-        <div>
+    <div className='masterContainer'>
+        <div className="masterContainer-summary">Page {currentPage} of {lastPage}</div>
+        <div className="masterContainer-pagination">
             <ul
-            className={classnames('pagination-container', { [className]: className })}
+            className='pagination-container paginationbarProgressive'
             >
                 <li
                 className={classnames('pagination-item', {

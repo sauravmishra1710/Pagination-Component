@@ -34,7 +34,7 @@ export default function App() {
       <h5 style={{ marginBottom: "5px"}}>Select pagination type</h5>
         <PaginationType onChangeCallback={onUpdatePaginationType}/>
       </div>
-      <div>
+      <div style={{margin: "10px"}}>
         <table>
           <thead>
             <tr>
@@ -60,14 +60,12 @@ export default function App() {
         </div>
         {(paginationType === "Controlled") ? 
          <ControlledPagination
-         className="paginationbarControlled"
          currentPage={currentPage}
          totalDataCount={data.length}
          pageSize={pageSize}
          onPageChange={page => setCurrentPage(page)}
          onUpdateItemsPerPage = {onUpdateItemsPerPage}
        /> : <ProgressivePagination
-         className="paginationbarProgressive"
          currentPage={currentPage}
          totalDataCount={data.length}
          pageSize={pageSize}
