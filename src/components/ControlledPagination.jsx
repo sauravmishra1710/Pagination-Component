@@ -12,7 +12,6 @@ const ControlledPagination = props => {
     siblingCount = 1,
     currentPage,
     pageSize,
-    className
   } = props;
 
   const paginationRange = usePagination({
@@ -45,7 +44,7 @@ const ControlledPagination = props => {
   const lastPage = paginationRange[paginationRange.length - 1];
   return (
     <ul
-      className={classnames('pagination-container', { [className]: className })}
+      className='pagination-container paginationbarControlled'
     >
         <li
         className={classnames('pagination-item', {

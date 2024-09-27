@@ -34,5 +34,22 @@ td {
 .paginationbarProgressive {
   display: flex;
   justify-content: right;
-  margin-right: 5px;
+  margin: 10px;
+}
+
+.masterContainer:after {
+  display: table;
+  clear: both;
+}
+
+.masterContainer-summary {
+  float: left;
+  height: 76px;
+  margin-left: 10px;
+  align-items: center;
+  display:flex;
+}
+
+.masterContainer-pagination {
+  float: right;
 }
