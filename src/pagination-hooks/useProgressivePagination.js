@@ -24,10 +24,10 @@ export const usePagination = ({
       return range(1, totalPageCount);
     }
 
-    let leftItemCount = 3;
-    let leftRange = range(1, leftItemCount);
+    let itemCount = 3;
+    let itemrange = range(1, itemCount);
 
-      return [...leftRange, totalPageCount];
+      return [...itemrange, totalPageCount];
   }, [totalDataCount, pageSize, siblingCount]);
 
   return paginationRange;
