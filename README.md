@@ -7,6 +7,8 @@ Pagination enables the user to select a specific page from a range of pages show
 1. **Controlled Pagination** - Controlled version of pagination for when the pagination state is managed by a parent component and showing distincs page numbers where the user has more control on the pages to be selected/loaded.
 2. **Progressive Pagination** - Paginator to be used for ordered data where the size of the data is known. Here the page numbers are not visible & navigation is only controlled by the **Previous** & **Next** buttons.
 
+We will implement both the type of pagination with custom hooks for both.
+
 # Pagination-Component
 Create a pagination component for a list of items fetched from an API. User navigates between pages, and ensure the data is displayed correctly.
 
@@ -43,73 +45,39 @@ There could be 4 possible states for a pagination component -
 
 The implementation of the pagination hook is here - https://github.com/sauravmishra1710/Pagination-Component/blob/main/src/pagination-hooks/useControlledPagination.js
 
-# Getting Started with Create React App
+# Basic Ideas of the Implementation
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Calculate total pages from totalCount and pageSize as follows:
 
-## Available Scripts
+```const totalPageCount = Math.ceil(totalCount / pageSize);```
 
-In the project directory, you can run:
+Math.ceil will return the next higher integer value based on the result & this will ensure that we are reserving an extra page for the remaining data to prevent any potential data loss.
 
-### `npm start`
+The core idea of the implementation is that we identify the range of numbers to show in our pagination component and then join them together with the DOTS (...) if required & return the final range. Based on the 4 possible states of the pagination component mentioned above, we decide what to return in the final range - 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- For the first scenario where our totalPageCount is less than the total number of pills we calculated based on the other params, we just return a range of numbers 1..totalPageCount .
+- For the other scenarios, we go about identifying whether we need DOTS on the left or right side of the currentPage by calculating the left and right indices after including the sibling pills to the currentPage and then make our decisions.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# Consume the Hook to Implement the Pagination Component
 
-### `npm test`
+- Do not render a Pagination component if there are fewer than two pages (and then we return null) .
+- Render the Pagination component as a list with left and right arrows which handle the previous and next actions the user makes. In between the arrows, we map over the paginationRange and render the page numbers as pagination-items. 
+- The DOTS are rendered as unicode character should there be a need to display them.
+- As a special handling we add a disabled class to the left/right arrow if the currentPage is the first or the last page, respectively. We disable the pointer-events and update the styles of the arrow icons through CSS if the icon needs to be disabled.
+- Add click event handlers to the page pills which will invoke the onPageChanged callback function with the updated value of currentPage.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Code: https://github.com/sauravmishra1710/Pagination-Component/blob/main/src/components/ControlledPagination.jsx
 
-### `npm run build`
+Finally, the component will need to maintain - 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- a **currentPage** state.
+- a **pageSize** state. This will maintain the total number of items to be displayed on the page based on a user selection input.
+- calculate the data to be rendered for a given page using a map.
+- a **paginationType** state to switch between the **controlled** (default) & **progressive** pagination types.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Demo & Screenshots
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+# Reference
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+https://www.freecodecamp.org/news/build-a-custom-pagination-component-in-react/
