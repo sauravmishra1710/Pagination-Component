@@ -8,26 +8,14 @@ const range = (start, end) => {
 export const usePagination = ({
   totalDataCount,
   pageSize,
-  siblingCount = 1,
 }) => {
   const paginationRange = useMemo(() => {
     const totalPageCount = Math.ceil(totalDataCount / pageSize);
 
-    // Pages count is determined as siblingCount + firstPage + lastPage + currentPage
-    const totalPageNumbers = siblingCount + 3;
-
-
-    // If the number of pages is less than the page numbers we want to show in our
-    // paginationComponent, we return the range [1..totalPageCount]
-    if (totalPageNumbers >= totalPageCount) {
-      return range(1, totalPageCount);
-    }
-
-    let itemCount = 3;
-    let itemRange = range(1, itemCount);
+    let itemRange = range(1, 3);
 
       return [...itemRange, totalPageCount];
-  }, [totalDataCount, pageSize, siblingCount]);
+  }, [totalDataCount, pageSize]);
 
   return paginationRange;
 };
