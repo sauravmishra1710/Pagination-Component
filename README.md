@@ -34,6 +34,20 @@ The pagination hook must return the range of numbers to be displayed in our pagi
 
 Internally we use the **useMemo** hook to compute the core pagination logic. The useMemo callback will run when any value in the dependency array changes.
 
+## Sibling Count
+
+Represents the minimum number of page buttons to be shown on each side of the current page button. 
+Defaults to 1.
+
+### 1 Sibling
+<img src="https://github.com/sauravmishra1710/Pagination-Component/blob/dev/Demo/1%20Sibbling.png">
+
+### 2 Siblings
+<img src="https://github.com/sauravmishra1710/Pagination-Component/blob/dev/Demo/2%20Sibblings.png">
+
+### 3 Siblings
+<img src="https://github.com/sauravmishra1710/Pagination-Component/blob/dev/Demo/3%20Sibblings.png">
+
 # States of a Pagination Component
 
 There could be 4 possible states for a pagination component -
@@ -51,7 +65,7 @@ Calculate total pages from totalCount and pageSize as follows:
 
 ```const totalPageCount = Math.ceil(totalCount / pageSize);```
 
-Math.ceil will return the next higher integer value based on the result & this will ensure that we are reserving an extra page for the remaining data to prevent any potential data loss.
+```Math.ceil``` will return the next higher integer value based on the result & this will ensure that we are reserving an extra page for the remaining data to prevent any potential data loss.
 
 The core idea of the implementation is that we identify the range of numbers to show in our pagination component and then join them together with the DOTS (...) if required & return the final range. Based on the 4 possible states of the pagination component mentioned above, we decide what to return in the final range - 
 
@@ -76,6 +90,16 @@ Finally, the component will need to maintain -
 - a **paginationType** state to switch between the **controlled** (default) & **progressive** pagination types.
 
 # Demo & Screenshots
+
+### Controlled
+<img src="https://github.com/sauravmishra1710/Pagination-Component/blob/dev/Demo/Controlled.png" alt="Controlled Pagination" width="900" height="300">
+
+### Progressive
+<img src="https://github.com/sauravmishra1710/Pagination-Component/blob/dev/Demo/Progressive.png" alt="Progressive Pagination" width="900" height="300">
+
+### Demo
+
+https://github.com/user-attachments/assets/fccc002f-ceb5-4ba1-93cd-12e545eeb6c0
 
 
 # Reference
