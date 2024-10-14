@@ -1,7 +1,12 @@
 {
-  "name": "pagination-component",
+  "name": "react-pagination-component",
+  "author": "Saurav Mishra",
+  "description": "Create a pagination component (using custom hook) for a list of items fetched from an API. User navigates between pages, and ensure the data is displayed correctly.",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "14.x"
+  },
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
